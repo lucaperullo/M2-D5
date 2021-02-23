@@ -18,9 +18,6 @@
     <style>
       /*
             EX1) Write a selector to target the <title> of the page*/
-      h1 {
-        color: red;
-      }
       /* EX2) Write a selector to target every children of the navbar*/
       /* EX3) Write a selector to target the "continue reading..." inside the jumbotron*/
       /* EX4) Write a selector to target the first blogpost*/
@@ -30,6 +27,45 @@
       /* EX8) Write a selector to target the second post author*/
       /* EX9) Write a selector to target the "back to top" link     #### EXTRA Try doing it without targeting the footer element directly*/
       /*  EX10) Write a selector to target the footer*/
+      h1 {
+        color: darkmagenta;
+      }
+
+      .nav > a {
+        background-color: orange;
+      }
+
+      .jumbotron > div > p:last-child > a {
+        color: black !important;
+      }
+
+      .blog-post:nth-of-type(1) {
+        background-color: cyan !important;
+      }
+
+      .nav > a:nth-child(even) {
+        background-color: lime !important;
+      }
+
+      .blog-post:nth-of-type(3) {
+        background-color: peru;
+      }
+
+      .list-unstyled.mb-0 > li > a {
+        color: slateblue !important;
+      }
+
+      .blog-post:nth-of-type(2) > .blog-post-meta > a {
+        background-color: olive;
+      }
+
+      .blog-footer > p:last-child > a {
+        color: brown !important;
+      }
+
+      footer {
+        background-color: orchid;
+      }
     </style>
 
     <meta
@@ -613,18 +649,133 @@
 
     <script>
       /*
-        JS Exercises
-        EX11) Write a function to add a new link into the navbar
-        EX12) Write a function to change the color of the main title
-        EX13) Write a function to change the background of the jumbotron
-        EX14) Write a function to remove all the links under "Elsewhere"
-        EX15) Write a function to change the column size for post headings
-        EX16) Write a function to remove the "Search" magnifying glass icon
-        EX17) Write a function to trim just the first 50 characters in the first paragraph for each blog post
-        EX18) Write a function and attach it to the "Newer" button, to add new Blog Post (just div and title)
-        EX19) Write a function and attach it to the "Older" button, to remove the last Blog Post
-        EX20) Write an alert with the name of the author every time the user hover with the mouse over an author name
-    */
+          JS Exercises
+          EX11) Write a function to add a new link into the navbar
+          EX12) Write a function to change the color of the main title
+          EX13) Write a function to change the background of the jumbotron
+          EX14) Write a function to remove all the links under "Elsewhere"
+          EX15) Write a function to change the column size for post headings
+          EX16) Write a function to remove the "Search" magnifying glass icon
+          EX17) Write a function to trim just the first 50 characters in the first paragraph for each blog post
+          EX18) Write a function and attach it to the "Newer" button, to add new Blog Post (just div and title)
+          EX19) Write a function and attach it to the "Older" button, to remove the last Blog Post
+          EX20) Write an alert with the name of the author every time the user hover with the mouse over an author name
+      */
+
+      const addNewLinkToNavbar = (name) => {
+        const nav = document.querySelector(".nav");
+
+        const el = document.createElement("a");
+        el.classList.add(["p-2", "text-muted"]);
+        el.innerText = name;
+
+        nav.appendChild(el);
+      };
+
+      const removeGlassIcon = () => {
+        document
+          .querySelector(
+            "body > div > header > div > div.col-4.d-flex.justify-content-end.align-items-center > a.text-muted"
+          )
+          .remove();
+      };
+
+      const jumbotronColor = () => {
+        document.querySelector(".jumbotron").style.color = "red";
+      };
+
+      const changeTitle = () => {
+        document.querySelector(".display-4").innerText = "meow";
+      };
+
+      const changeColSize = () => {
+        [...document.querySelectorAll(".col-md-6")].forEach((col) => {
+          col.classList.remove("col-md-6");
+          col.classList.add("col-md-12");
+        });
+      };
+
+      const removeLinks = () => {
+        document.querySelector("div.p-4:last-child>.list-unstyled").innerHTML =
+          "";
+      };
+
+      const trunc = () => {
+        const el = document.querySelectorAll(".blog-main > .blog-post > p");
+
+        el.forEach((p) => {
+          p.innerText = p.innerText.substring(0, 50);
+        });
+      };
+
+      const newPost = () => {
+        const parent = document.querySelector(".blog-main");
+
+        const post = document.createElement("div");
+
+        post.classList.add("blog-post");
+
+        post.innerHTML = `
+              <h2 class="blog-post-title">
+                Another blog post
+              </h2>
+              <p class="blog-post-meta">
+                October 20, 2020 by
+                <a href="#">Petras</a>
+              </p>
+              <p>
+                Cum sociis natoque penatibus et
+                magnis
+                <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu
+                leo quam. Pellentesque ornare sem
+                lacinia quam venenatis vestibulum.
+                Sed posuere consectetur est at
+                lobortis. Cras mattis consectetur
+                purus sit amet fermentum.
+              </p>
+              <blockquote>
+                <p>
+                  Curabitur blandit tempus
+                  porttitor.
+                  <strong>Nullam quis risus eget urna
+                    mollis</strong>
+                  ornare vel eu leo. Nullam id dolor
+                  id nibh ultricies vehicula ut id
+                  elit.
+                </p>
+              </blockquote>
+              <p>
+                Etiam porta
+                <em>sem malesuada magna</em> mollis
+                euismod. Cras mattis consectetur
+                purus sit amet fermentum. Aenean
+                lacinia bibendum nulla sed
+                consectetur.
+              </p>
+              <p>
+                Vivamus sagittis lacus vel augue
+                laoreet rutrum faucibus dolor
+                auctor. Duis mollis, est non commodo
+                luctus, nisi erat porttitor ligula,
+                eget lacinia odio sem nec elit.
+                Morbi leo risus, porta ac
+                consectetur ac, vestibulum at eros.
+              </p>
+          `;
+
+        parent.prepend(post);
+      };
+      const oldPost = () => {
+        const els = document.querySelectorAll(".blog-post");
+
+        els[els.length - 1].remove();
+      };
+
+      document.querySelectorAll(".blog-post-meta > a").forEach((author) => {
+        author.addEventListener("mouseover", () => {
+          alert(author.innerText);
+        });
+      });
     </script>
   </body>
 </html>
